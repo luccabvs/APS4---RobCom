@@ -24,21 +24,17 @@ if __name__=="__main__":
     velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 3 )
     recebe_scan = rospy.Subscriber("/scan", LaserScan, scaneou)
 
-    anda_re = Twist(Vector3(-0.2, 0, 0), Vector3(0, 0, 0))
-    frente = Twist(Vector3(0.2, 0, 0), Vector3(0, 0, 0))
+    anda_re = Twist(Vector3(-0.1, 0, 0), Vector3(0, 0, 0))
+    frente = Twist(Vector3(0.1, 0, 0), Vector3(0, 0, 0))
     parado = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
     
 
     while not rospy.is_shutdown():
-        velocidade_saida.publish(frente)
 
         if distancia < 0.95:
-            velocidade_saida.publish(parado)
-            rospy.sleep(2)
             velocidade_saida.publish(anda_re)
+        
         if distancia > 1.05:
-            velocidade_saida.publish(parado)
-            rospy.sleep(2)
             velocidade_saida.publish(frente)
 
            
